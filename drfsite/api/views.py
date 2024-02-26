@@ -44,4 +44,11 @@ class WomanApiView(APIView):
         serializer.save()
         return Response({"post": serializer.data}, status=status.HTTP_201_CREATED)
 
-
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        try:
+            instance = Women.objects.get(pk=pk)
+            instance.delete()
+            return Response({"post": "Object deleted"}, status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response({'error': 'Object does not exist'}, status=status.HTTP_404_NOT_FOUND)
