@@ -1,4 +1,4 @@
-import io
+# import io
 
 from rest_framework import serializers
 # from rest_framework.parsers import JSONParser
@@ -9,15 +9,11 @@ from rest_framework import serializers
 #     def __init__(self, title, content):
 #         self.title = title
 #         self.content = content
-
-
-class WomenSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    content = serializers.CharField()
-    time_created = serializers.DateTimeField(read_only=True)
-    time_updated = serializers.DateTimeField(read_only=True)
-    is_published = serializers.BooleanField(default=True)
-    category_id = serializers.IntegerField()
+#
+#
+# class WomenSerializer(serializers.Serializer):
+#     title = serializers.CharField(max_length=255)
+#     content = serializers.CharField()
 
 
 # def encode():
@@ -32,5 +28,17 @@ class WomenSerializer(serializers.Serializer):
 #     stream = io.BytesIO(b'{"title":"Angelina","content":"Content: Joli"}')
 #     data = JSONParser().parse(stream)
 #     serializer = WomenSerializer(data=data)
-#     serializer.is_valid(raise_exception=True)
+#     serializer.is_valid()
 #     print(serializer.validated_data)
+
+
+class WomenSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    content = serializers.CharField()
+    time_created = serializers.DateTimeField(read_only=True)  # set read only
+    time_updated = serializers.DateTimeField(read_only=True)
+    is_published = serializers.BooleanField(default=True)
+    category_id = serializers.IntegerField()
+
+
+
