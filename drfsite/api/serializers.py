@@ -1,6 +1,10 @@
 # import io
 
 from rest_framework import serializers
+
+from api.models import Women
+
+
 # from rest_framework.parsers import JSONParser
 # from rest_framework.renderers import JSONRenderer
 
@@ -40,5 +44,17 @@ class WomenSerializer(serializers.Serializer):
     is_published = serializers.BooleanField(default=True)
     category_id = serializers.IntegerField()
 
+    def create(self, validated_data):
+        return Women.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.content = validated_data.get('content', instance.content)
+        instance.time_created = validated_data.get('time_created', instance.time_created)
+        instance.time_updated = validated_data.get('time_updated', instance.time_updated)
+        instance.is_published = validated_data.get('is_published', instance.is_published)
+        instance.save()
+
+        return instance
 
 

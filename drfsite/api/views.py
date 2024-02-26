@@ -19,9 +19,29 @@ class WomanApiView(APIView):
     def post(self, request):
         serializer = WomenSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            post_new = Women.objects.create(
-                title=request.data['title'],
-                content=request.data['content'],
-                category_id=request.data['category_id'],
-            )
-            return Response({'title': WomenSerializer(post_new).data}, status=status.HTTP_201_CREATED)
+            # post_new = Women.objects.create(
+            #     title=request.data['title'],
+            #     content=request.data['content'],
+            #     category_id=request.data['category_id'],
+            # )
+            serializer.save()
+
+            # return Response({'title': WomenSerializer(post_new).data}, status=status.HTTP_201_CREATED)
+            return Response({'title': serializer.data}, status=status.HTTP_201_CREATED)
+
+    def put(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        if not pk:
+            return Response({'error': 'Method PUT not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        try:
+            instance = Women.objects.get(pk=pk)
+        except:
+            return Response({'error': 'Object does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = WomenSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"post": serializer.data}, status=status.HTTP_201_CREATED)
+
+
