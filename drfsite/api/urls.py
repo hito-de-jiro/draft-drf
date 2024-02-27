@@ -9,8 +9,9 @@ from api.views import (
 
 from rest_framework import routers
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register(r'women', WomenViewSet)
+print(router.urls)
 
 urlpatterns = [
     path('api/v1/', include(router.urls))

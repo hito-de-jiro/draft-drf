@@ -30,3 +30,4 @@ class WomenViewSet(viewsets.ModelViewSet):
     """
     serializer_class = WomenSerializer
     queryset = Women.objects.all()
+    
