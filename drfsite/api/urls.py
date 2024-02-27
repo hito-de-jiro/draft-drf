@@ -3,11 +3,11 @@ from django.urls import path
 from api.views import (
     WomenAPIList,
     WomenAPIUpdate,
-    WomenAPIDetailView,
+    WomenAPIDestroy,
 )
 
 urlpatterns = [
-    path('v1/womenlist/', WomenAPIList.as_view()),
-    path('v1/womenlist/<int:pk>/', WomenAPIUpdate.as_view()),
-    path('v1/womendetail/<int:pk>/', WomenAPIDetailView.as_view()),
+    path('api/v1/women/', WomenAPIList.as_view()),
+    path('api/v1/women/<int:pk>/', WomenAPIUpdate.as_view()),
+    path('api/v1/womendelete/<int:pk>/', WomenAPIDestroy.as_view()),
 ]
