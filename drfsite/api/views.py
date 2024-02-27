@@ -31,7 +31,14 @@ class WomenViewSet(viewsets.ModelViewSet):
     A viewset for viewing and editing instances.
     """
     serializer_class = WomenSerializer
-    queryset = Women.objects.all()
+    # queryset = Women.objects.all()
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        if not pk:
+            return Women.objects.all()[:3]
+
+        return Women.objects.filter(pk=pk)
 
     @action(methods=['get'], detail=True)
     def category(self, request, pk=None):
