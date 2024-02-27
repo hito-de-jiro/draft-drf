@@ -1,10 +1,8 @@
-from rest_framework import viewsets, mixins, generics
-from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
-from .models import Women, Category
+from .models import Women
+from .permission import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import WomenSerializer
 
 
@@ -16,11 +14,12 @@ class WomenAPIList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class WomenAPIUpdate(generics.UpdateAPIView):
+class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
     """Updates a single,
     methods PUT and PATCH"""
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 class WomenAPIDestroy(generics.RetrieveDestroyAPIView):
@@ -29,5 +28,4 @@ class WomenAPIDestroy(generics.RetrieveDestroyAPIView):
 
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
-    permission_classes = (IsAdminUser,)
-
+    permission_classes = (IsAdminOrReadOnly,)
