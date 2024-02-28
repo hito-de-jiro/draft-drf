@@ -1,5 +1,6 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from .models import Women
 from .permission import IsAdminOrReadOnly, IsOwnerOrReadOnly
@@ -11,7 +12,7 @@ class WomenAPIList(generics.ListCreateAPIView):
     methods GET and POST """
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
@@ -19,7 +20,8 @@ class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
     methods PUT and PATCH"""
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
 
 
 class WomenAPIDestroy(generics.RetrieveDestroyAPIView):
